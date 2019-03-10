@@ -163,9 +163,6 @@ ndn_netface_send(struct ndn_face_intf* self, const uint8_t* packet, uint32_t siz
   /* check mtu */
   if (size > netface->mtu)
   {
-    printf("ndn: packet size (%u) exceeds network face mtu (%u); "
-           "send with fragmentation (netface=%" PRIkernel_pid ")\n",
-           size, netface->mtu, pid);
     return _ndn_netface_send_fragments(pid, packet, size, netface->mtu);
   }
 
@@ -248,4 +245,16 @@ ndn_netface_auto_construct(void)
   return netface_num;
 }
 
+void ndn_netface_traverse_print(void)
+{
+  printf("-----------------------------------------\n");
+  for (uint8_t i = 0; i < GNRC_NETIF_NUMOF; i++)
+  {
+    kernel_pid_t pid = _netface_table[i].intf.face_id;
+    if (pid != KERNEL_PID_UNDEF)
+      printf("network face: %s  face id: %"
+             PRIkernel_pid "\n", thread_getname(pid), pid);
+  }
+  printf("-----------------------------------------\n");
+}
  /** @} */
