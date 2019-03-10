@@ -1,2 +1,2 @@
-MODULE = ndn-adaptation
+MODULE = ndn-adaptation-util
 include $(RIOTBASE)/Makefile.base

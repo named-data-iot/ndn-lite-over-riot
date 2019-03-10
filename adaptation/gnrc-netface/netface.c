@@ -149,10 +149,8 @@ ndn_netface_down(struct ndn_face_intf* self)
 }
 
 int
-ndn_netface_send(struct ndn_face_intf* self, const ndn_name_t* name,
-                const uint8_t* packet, uint32_t size)
+ndn_netface_send(struct ndn_face_intf* self, const uint8_t* packet, uint32_t size)
 {
-  (void)name;
   kernel_pid_t pid = (kernel_pid_t)self->face_id;
 
   ndn_netface_t* netface = _ndn_netface_find(pid);
@@ -165,7 +163,7 @@ ndn_netface_send(struct ndn_face_intf* self, const ndn_name_t* name,
   /* check mtu */
   if (size > netface->mtu)
   {
-    printf("ndn: packet size (%lu) exceeds network face mtu (%u); "
+    printf("ndn: packet size (%u) exceeds network face mtu (%u); "
            "send with fragmentation (netface=%" PRIkernel_pid ")\n",
            size, netface->mtu, pid);
     return _ndn_netface_send_fragments(pid, packet, size, netface->mtu);

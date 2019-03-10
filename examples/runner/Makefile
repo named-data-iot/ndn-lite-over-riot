@@ -9,9 +9,11 @@ USEPKG += ndn-lite
 
 DIRS += $(ADAPTATION)
 DIRS += $(ADAPTATION)/gnrc-netface
+DIRS += $(ADAPTATION)/util
 
-USEMODULE += adaptation
-USEMODULE += adaptation-gnrc-netface
+USEMODULE += ndn-adaptation
+USEMODULE += ndn-adaptation-gnrc-netface
+USEMODULE += ndn-adaptation-util
 
 USEMODULE += gnrc_netdev_default
 USEMODULE += auto_init_gnrc_netif

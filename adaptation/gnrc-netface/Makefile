@@ -1,2 +1,2 @@
-MODULE = adaptation-gnrc-netface
+MODULE = ndn-adaptation-gnrc-netface
 include $(RIOTBASE)/Makefile.base
