@@ -9,12 +9,28 @@
  */
 
 #include <stdio.h>
+#include "../../adaptation/ndn-lite.h"
+#include "ndn-lite/encode/name.h"
 #include "ndn-lite/forwarder/forwarder.h"
 #include "ndn-lite/util/alarm.h"
-#include "../../adaptation/gnrc-netface/netface.h"
+#include "ndn-lite/face/direct-face.h"
 #include <kernel_types.h>
 #include <thread.h>
 #include "shell.h"
+#include <stdbool.h>
+
+static bool fired = false;
+
+int
+on_interest_timeout_callback(const uint8_t* interest, uint32_t interest_size)
+{
+  (void)interest;
+  (void)interest_size;
+  printf("PIT timeout, sys time = %ld ms\n", (uint32_t)ndn_alarm_millis_get_now());
+  fired = true;
+  return 0;
+}
+
 
 int main(void)
 {
@@ -22,17 +38,41 @@ int main(void)
   printf("/**** Application Is Running: PID = %" PRIkernel_pid " ****/\n",
         thread_getpid());
 
-  ndn_forwarder_t* forwarder = ndn_forwarder_init();
-  if (forwarder)
-    printf("/**** Forwarder Initialized ****/\n");
+  ndn_lite_instance_t* instance = ndn_lite_init();
+  if (!instance)
+    printf("ndn-lite: instance initialization fail\n");
 
-  printf("/**** Network Faces Auto Construct ****/\n");
-  uint64_t start = ndn_alarm_millis_get_now();
-  ndn_netface_auto_construct();
-  uint64_t delta = ndn_alarm_millis_get_now() - start;
-  printf("Auto Construction Complete In %d ms\n", (int)delta);
+  char* buffer = "/ndn/name/tests";
+  int hold_size = ndn_name_uri_tlv_probe_size(buffer, strlen(buffer));
 
-  ndn_netface_traverse_print();
+  uint8_t hold[hold_size];
+  ndn_encoder_t encoder;
+  encoder_init(&encoder, hold, sizeof(hold));
+
+  ndn_name_uri_tlv_encode(&encoder, buffer, strlen(buffer));
+
+  ndn_decoder_t decoder;
+  decoder_init(&decoder, hold, encoder.offset);
+  ndn_name_print(&decoder);
+  putchar('\n');
+
+
+  uint8_t hold_more[100];
+  encoder_init(&encoder, hold_more, sizeof(hold_more));
+  ndn_interest_uri_tlv_encode(&encoder, buffer, strlen(buffer),
+                              200, 1234);
+
+  ndn_direct_face_construct(10);
+
+
+  ndn_direct_face_express_interest(NULL, hold_more, encoder.offset, NULL,
+                                   on_interest_timeout_callback);
+
+  while(1) {
+    if (!fired)
+      printf("sys time = %ld ms\n", (uint32_t)ndn_alarm_millis_get_now());
+    ndn_lite_process(instance);
+  }
 
   char line_buf[SHELL_DEFAULT_BUFSIZE];
   shell_run(NULL, line_buf, SHELL_DEFAULT_BUFSIZE);

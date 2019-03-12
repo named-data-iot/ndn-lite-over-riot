@@ -70,7 +70,7 @@ int ndn_lite_process(ndn_lite_instance_t* instance)
   ndn_forwarder_process(instance->forwarder);
 
   // process RIOT message queue
-  msg_receive(&instance->msg);
+  msg_try_receive(&instance->msg);
   switch (instance->msg.type)
   {
     case GNRC_NETAPI_MSG_TYPE_RCV:
