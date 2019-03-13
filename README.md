@@ -3,7 +3,7 @@ NDN-Lite Over RIOT OS
 <img src="https://zhiyi-zhang.com/images/ndn-lite-logo.jpg" alt="logo" width="500"/>
 This repo provides RIOT adaptation to NDN Lite on time module and network face. Examples are tested on macOS. The package provide two examples to run on either board (nRF52840DK) or native machine. Such seperation is largely because current RIOT doesn't not support latest macOS version well and may occur compiling errors when use `xtimer` on native port.
 
-# Relation With Other RIOT Related NDN Repo
+# Relation With Other RIOT Related NDN Repos
 * [NDN-RIOT](https://github.com/named-data-iot/ndn-riot) uses dynamic memory allocation and this one don't. Besides, NDN-RIOT seperates application and forwarder, thus resulting in larger memory usage. You can consider this repo a evolved NDN-RIOT.
 * [NDN-Lite Unit Tests Over RIOT OS](https://github.com/named-data-iot/ndn-lite-test-over-riot) is used for unit tests only and can't run on boards. To best facilitate testing and logging, it employs many memory expensive method that prevent it from a on-boarding run. The most important, it doesn't have RIOT networks stack adaptation.
 
