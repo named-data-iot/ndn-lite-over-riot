@@ -10,7 +10,7 @@
 
 #include <stdio.h>
 #include "../../adaptation/ndn-lite.h"
-#include "ndn-lite/encode/name.h"
+#include "ndn-lite/encode/light/name-light.h"
 #include "ndn-lite/forwarder/forwarder.h"
 #include "ndn-lite/util/alarm.h"
 #include "ndn-lite/face/direct-face.h"
