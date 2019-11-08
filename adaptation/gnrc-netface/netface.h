@@ -12,6 +12,8 @@
 #define NDN_NETIF_H_
 
 #include "ndn-lite/forwarder/face.h"
+#include <kernel_types.h>
+#include <thread.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -23,7 +25,8 @@ extern "C" {
 typedef struct ndn_netface {
   ndn_face_intf_t intf; /** << base class of ndn-lite face */
   uint16_t mtu;        /**< mtu of the interface */
-  uint8_t frag_buffer[NDN_FRAG_BUFFER_MAX]; /**< reassembly buffer */
+  uint8_t frag_buffer[200]; /**< reassembly buffer */
+  kernel_pid_t pid;
 } ndn_netface_t;
 
 /**

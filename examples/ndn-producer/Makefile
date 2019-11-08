@@ -1,5 +1,5 @@
 # name of your application
-APPLICATION = nfd_lite_runner
+APPLICATION = ndn-producer
 # This has to be the absolute path to the RIOT base directory and NDN Lite adaptation :
 RIOTBASE ?= $(CURDIR)/../../../RIOT
 
@@ -20,6 +20,8 @@ USEMODULE += auto_init_gnrc_netif
 USEMODULE += shell
 USEMODULE += shell_commands
 USEMODULE += ps
+USEMODULE += xtimer
+
 
 # If no BOARD is found in the environment, use this default:
 BOARD ?= native

@@ -26,20 +26,34 @@
 #include "stdio.h"
 #include "inttypes.h"
 
+#define MAX_NET_QUEUE_SIZE 16
+
+static msg_t msg_q[MAX_NET_QUEUE_SIZE];
+static gnrc_netreg_entry_t me_reg;
 static ndn_netface_t _netface_table[GNRC_NETIF_NUMOF];
 
 /* helper function */
-static ndn_netface_t* _ndn_netface_find(kernel_pid_t pid)
+ndn_netface_t* _ndn_netface_find(uint16_t face_id)
 {
-  if (pid ==  KERNEL_PID_UNDEF)
-    return NULL;
   for (int i = 0; i < GNRC_NETIF_NUMOF; ++i)
   {
-    if (_netface_table[i].intf.face_id == pid)
+    if (_netface_table[i].intf.face_id == face_id)
       return &_netface_table[i];
   }
   return NULL;
 }
+
+ndn_netface_t* _ndn_netface_inverse_find(kernel_pid_t pid)
+{
+  for (int i = 0; i < GNRC_NETIF_NUMOF; ++i)
+  {
+    if (_netface_table[i].pid == pid)
+      return &_netface_table[i];
+  }
+  return NULL;
+}
+
+
 
 static int _ndn_netface_send_packet(kernel_pid_t pid, gnrc_pktsnip_t* pkt)
 {
@@ -61,7 +75,10 @@ static int _ndn_netface_send_packet(kernel_pid_t pid, gnrc_pktsnip_t* pkt)
   ((gnrc_netif_hdr_t *)pkt->data)->if_pid = pid;
 
   /* send to interface */
+
+  //int ret = gnrc_netapi_dispatch_send(GNRC_NETTYPE_NDN, GNRC_NETREG_DEMUX_CTX_ALL, pkt);
   if (gnrc_netapi_send(pid, pkt) < 1)
+  //if (ret < 1)
   {
     printf("ndn: failed to send packet (netface=%" PRIkernel_pid ")\n", pid);
     gnrc_pktbuf_release(pkt);
@@ -124,7 +141,7 @@ static int _ndn_netface_send_fragments(kernel_pid_t pid, const uint8_t* data,
 ndn_netface_t*
 ndn_netface_find(uint16_t face_id)
 {
-  return _ndn_netface_find((kernel_pid_t)face_id);
+  return _ndn_netface_find(face_id);
 }
 
 int
@@ -151,19 +168,20 @@ ndn_netface_down(struct ndn_face_intf* self)
 int
 ndn_netface_send(struct ndn_face_intf* self, const uint8_t* packet, uint32_t size)
 {
-  kernel_pid_t pid = (kernel_pid_t)self->face_id;
+  printf("packet: ");
+  for (int i = 0; i < size; i++) printf("%d ", *(packet + i));putchar('\n');
 
-  ndn_netface_t* netface = _ndn_netface_find(pid);
-  if (netface == NULL)
-  {
-    printf("ndn: no such network face (netface=%" PRIkernel_pid ")", pid);
-    return -1;
-  }
+  ndn_netface_t* phyface = ndn_netface_find(self->face_id);
+  kernel_pid_t pid = phyface->pid;
+  if (phyface == NULL)
+    printf("no such physical net face, face_id  = %d\n", self->face_id);
+
+ printf("send...packet size is %d, current physical face mtu is %d\n", size, phyface->mtu);
 
   /* check mtu */
-  if (size > netface->mtu)
+  if (size > phyface->mtu)
   {
-    return _ndn_netface_send_fragments(pid, packet, size, netface->mtu);
+    return _ndn_netface_send_fragments(pid, packet, size, phyface->mtu);
   }
 
   gnrc_pktsnip_t* pkt = gnrc_pktbuf_add(NULL, packet, size,
@@ -177,12 +195,102 @@ ndn_netface_send(struct ndn_face_intf* self, const uint8_t* packet, uint32_t siz
   return _ndn_netface_send_packet(pid, pkt);
 }
 
+
+
+void 
+_process_packet(ndn_face_intf_t* self,  gnrc_pktsnip_t *pkt)
+{
+  // not considering fragmentation first
+  uint8_t buffer[100];
+  if  (pkt == NULL || pkt->type != GNRC_NETTYPE_NDN) {
+    printf("pkt is null or pkt type is not NDN\n");
+    return -1;
+  }
+
+  // hold here first, releast after forwarder processing this
+  uint8_t* buf = (uint8_t*)pkt->data;
+  int len = pkt->size;
+
+  ndn_forwarder_receive(self, buf, len);
+  printf("forwarder has processed this packet\n");
+
+  // release the gnrc packet
+  gnrc_pktbuf_release(pkt);
+}
+
+
+
+
+
+void
+ndn_netface_receive(ndn_face_intf_t* self, void* param, uint32_t param_size)
+{
+  msg_t msg, reply;
+
+  /* preinitialize ACK to GET/SET commands*/
+  reply.type = GNRC_NETAPI_MSG_TYPE_ACK;
+  
+  int ret = msg_try_receive(&msg);
+  if (ret == -1) {
+    //printf("no messgae receive yet\n");
+    
+     // post another message receiving
+     ndn_msgqueue_post(self, ndn_netface_receive, param, param_size);
+     return;
+  }
+
+  switch (msg.type)
+  {
+    case GNRC_NETAPI_MSG_TYPE_RCV:
+        printf("ndn: RCV message received from pid %"
+              PRIkernel_pid "\n", msg.sender_pid);
+        _process_packet(self, (gnrc_pktsnip_t *)msg.content.ptr);
+        break;
+
+    case GNRC_NETAPI_MSG_TYPE_GET:
+    case GNRC_NETAPI_MSG_TYPE_SET:
+        reply.content.value = -ENOTSUP;
+        printf("set or get\n");
+        msg_reply(&msg, &reply);
+        break;
+    case GNRC_NETAPI_MSG_TYPE_SND:
+       printf("send\n");
+    default:
+        break;
+  }
+
+  printf("switch clause end... posing another netface receive event to this face\n");
+  ndn_msgqueue_post(self, ndn_netface_receive, param, param_size);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 uint32_t
 ndn_netface_auto_construct(void)
 {
+  // set up riot messge queue to receive this
+  msg_init_queue(msg_q, MAX_NET_QUEUE_SIZE);
+
+  me_reg.demux_ctx = GNRC_NETREG_DEMUX_CTX_ALL;
+  me_reg.target.pid = thread_getpid();
+
+  /* register interest in all NDN packets */
+  gnrc_netreg_register(GNRC_NETTYPE_NDN, &me_reg);
+
+
   /* initialize the netif table entry */
   for (int i = 0; i < GNRC_NETIF_NUMOF; ++i)
-    _netface_table[i].intf.face_id = (uint16_t)KERNEL_PID_UNDEF;
+    _netface_table[i].intf.face_id = NDN_INVALID_ID;
 
   /* get list of interfaces */
   uint32_t netface_num = gnrc_netif_numof();
@@ -201,7 +309,6 @@ ndn_netface_auto_construct(void)
     i++;
     kernel_pid_t pid = netface->pid;
     gnrc_nettype_t proto;
-
     // get device mtu
     if (gnrc_netapi_get(pid, NETOPT_MAX_PACKET_SIZE, 0,
                         &_netface_table[i].mtu,
@@ -226,21 +333,20 @@ ndn_netface_auto_construct(void)
     }
 
     _netface_table[i].intf.state = NDN_FACE_STATE_DOWN;
-    _netface_table[i].intf.face_id = (uint16_t)pid;
+    _netface_table[i].intf.face_id = NDN_INVALID_ID;
     _netface_table[i].intf.type = NDN_FACE_TYPE_NET;
-
     _netface_table[i].intf.up = ndn_netface_up;
     _netface_table[i].intf.send = ndn_netface_send;
     _netface_table[i].intf.down = ndn_netface_down;
     _netface_table[i].intf.destroy = ndn_netface_destroy;
+    _netface_table[i].pid = pid;
 
-    // add default route "/ndn" for this face
-    char comp[] = "ndn";
-    name_component_t component;
-    ndn_name_t default_prefix;
-    name_component_from_string(&component, comp, sizeof(comp));
-    ndn_name_init(&default_prefix, &component, 1);
-    ndn_forwarder_fib_insert(&default_prefix, &_netface_table[i].intf, 0);
+     ndn_forwarder_register_face(&_netface_table[i].intf);
+     ndn_face_up(&_netface_table[i].intf);
+     
+     // post face receive event
+     ndn_msgqueue_post(&_netface_table[i].intf, ndn_netface_receive, NULL, 0);
+
   }
   return netface_num;
 }
@@ -250,10 +356,9 @@ void ndn_netface_traverse_print(void)
   printf("-----------------------------------------\n");
   for (uint8_t i = 0; i < GNRC_NETIF_NUMOF; i++)
   {
-    kernel_pid_t pid = _netface_table[i].intf.face_id;
-    if (pid != KERNEL_PID_UNDEF)
-      printf("network face: %s  face id: %"
-             PRIkernel_pid "\n", thread_getname(pid), pid);
+    if ( _netface_table[i].intf.face_id != NDN_INVALID_ID);
+      printf("network face: %s  face id: %d  mtu: %d\n", thread_getname(_netface_table[i].pid),  
+                   _netface_table[i].intf.face_id, _netface_table[i].mtu);
   }
   printf("-----------------------------------------\n");
 }

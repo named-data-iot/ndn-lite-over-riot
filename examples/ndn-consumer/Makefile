@@ -1,5 +1,5 @@
 # name of your application
-APPLICATION = nfd_lite_runner
+APPLICATION = ndn-consumer
 # This has to be the absolute path to the RIOT base directory and NDN Lite adaptation :
 RIOTBASE ?= $(CURDIR)/../../../RIOT
 
@@ -17,10 +17,11 @@ USEMODULE += ndn-adaptation-util
 
 USEMODULE += gnrc_netdev_default
 USEMODULE += auto_init_gnrc_netif
-USEMODULE += xtimer
 USEMODULE += shell
 USEMODULE += shell_commands
 USEMODULE += ps
+USEMODULE += xtimer
+
 
 # If no BOARD is found in the environment, use this default:
 BOARD ?= native
@@ -36,6 +37,7 @@ BOARD_INSUFFICIENT_MEMORY := airfy-beacon chronos msb-430 msb-430h nrf51dongle \
 # which is not needed in a production environment but helps in the
 # development process:
 CFLAGS += -DDEVELHELP
+
 
 # Change this to 0 show compiler invocation lines by default:
 QUIET ?= 1
