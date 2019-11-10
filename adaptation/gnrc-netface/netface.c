@@ -264,17 +264,6 @@ ndn_netface_receive(ndn_face_intf_t* self, void* param, uint32_t param_size)
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
 uint32_t
 ndn_netface_auto_construct(void)
 {
@@ -320,17 +309,10 @@ ndn_netface_auto_construct(void)
     }
 
     // set device net proto to NDN
-    if (gnrc_netapi_get(pid, NETOPT_PROTO, 0,
-                         &proto, sizeof(proto)) == sizeof(proto))
-    {
-      // this device supports PROTO option
-      if (proto != GNRC_NETTYPE_NDN)
-      {
-        proto = GNRC_NETTYPE_NDN;
-        gnrc_netapi_set(pid, NETOPT_PROTO, 0,
-                        &proto, sizeof(proto));
-      }
-    }
+    proto = GNRC_NETTYPE_NDN;
+    printf("setting ndn as network layer protocol\n");
+    int ret = gnrc_netapi_set(pid, NETOPT_PROTO, 0,  &proto, sizeof(proto));
+    if (ret < 0) printf("setting to ndn failed\n");
 
     _netface_table[i].intf.state = NDN_FACE_STATE_DOWN;
     _netface_table[i].intf.face_id = NDN_INVALID_ID;

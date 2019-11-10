@@ -28,7 +28,18 @@ bool running = false;
 void
 on_interest(const uint8_t *interest, uint32_t interest_size, void *userdata)
 {
-  printf("interest arrival\n");
+  ndn_data_t data;
+  ndn_encoder_t encoder;
+  char * str = "I'm a Data packet.";
+
+  printf("On interest\n");
+  ndn_name_from_string(&data.name, "/ndn/test/01", strlen("/ndn/test/01"));
+  ndn_data_set_content(&data, (uint8_t*)str, strlen(str) + 1);
+  ndn_metainfo_init(&data.metainfo);
+  ndn_metainfo_set_content_type(&data.metainfo, NDN_CONTENT_TYPE_BLOB);
+  encoder_init(&encoder, buffer, sizeof(buffer));
+  ndn_data_tlv_encode_digest_sign(&encoder, &data);
+  ndn_forwarder_put_data(encoder.output_value, encoder.offset);
 }
 
 int main(void)
