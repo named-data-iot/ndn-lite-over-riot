@@ -22,7 +22,6 @@ USEMODULE += shell_commands
 USEMODULE += ps
 USEMODULE += xtimer
 
-
 # If no BOARD is found in the environment, use this default:
 BOARD ?= native
 

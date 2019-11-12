@@ -20,6 +20,12 @@
 #include "xtimer.h"
 #include "shell.h"
 
+
+#include "msg.h"
+#include "net/gnrc/netreg.h"
+#include "net/gnrc/pktdump.h"
+
+
 static uint8_t buffer[200] = {0};
 
 static ndn_name_t name;
@@ -55,6 +61,7 @@ int main(void)
 
    ndn_forwarder_register_name_prefix(&name, on_interest, NULL);
   running = true;
+
   while(running) {
     ndn_forwarder_process();
     xtimer_usleep(10);

@@ -168,9 +168,6 @@ ndn_netface_down(struct ndn_face_intf* self)
 int
 ndn_netface_send(struct ndn_face_intf* self, const uint8_t* packet, uint32_t size)
 {
-  printf("packet: ");
-  for (int i = 0; i < size; i++) printf("%d ", *(packet + i));putchar('\n');
-
   ndn_netface_t* phyface = ndn_netface_find(self->face_id);
   kernel_pid_t pid = phyface->pid;
   if (phyface == NULL)
@@ -200,16 +197,16 @@ ndn_netface_send(struct ndn_face_intf* self, const uint8_t* packet, uint32_t siz
 void 
 _process_packet(ndn_face_intf_t* self,  gnrc_pktsnip_t *pkt)
 {
+  printf("in\n");
+
+  size_t len = pkt->size;
+  uint8_t* buf = (uint8_t*)pkt->data;
+
   // not considering fragmentation first
-  uint8_t buffer[100];
   if  (pkt == NULL || pkt->type != GNRC_NETTYPE_NDN) {
     printf("pkt is null or pkt type is not NDN\n");
     return -1;
   }
-
-  // hold here first, releast after forwarder processing this
-  uint8_t* buf = (uint8_t*)pkt->data;
-  int len = pkt->size;
 
   ndn_forwarder_receive(self, buf, len);
   printf("forwarder has processed this packet\n");
