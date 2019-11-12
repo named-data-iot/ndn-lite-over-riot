@@ -29,3 +29,8 @@ make all term
 cd ndn-lite-over-riot/examples/ndn-consumer
 make all term PORT=tap1
 ```
+
+## Current Status and Plan
+* Fragementation not supported yet, will implement that.
+* Using slightly modified RIOT for larger stack size, for nRF52840DK, 4096 is the setting. Will test other boards lately.
+* The security backend adaptation.
