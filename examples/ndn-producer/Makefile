@@ -8,19 +8,8 @@ ADAPTATION ?= $(CURDIR)/../../adaptation
 USEPKG += ndn-lite
 
 DIRS += $(ADAPTATION)
-DIRS += $(ADAPTATION)/gnrc-netface
-DIRS += $(ADAPTATION)/util
-
 USEMODULE += ndn-adaptation
-USEMODULE += ndn-adaptation-gnrc-netface
-USEMODULE += ndn-adaptation-util
 
-USEMODULE += gnrc_netdev_default
-USEMODULE += auto_init_gnrc_netif
-USEMODULE += shell
-USEMODULE += shell_commands
-USEMODULE += ps
-USEMODULE += xtimer
 
 # If no BOARD is found in the environment, use this default:
 BOARD ?= native
@@ -37,7 +26,10 @@ BOARD_INSUFFICIENT_MEMORY := airfy-beacon chronos msb-430 msb-430h nrf51dongle \
 # development process:
 CFLAGS += -DDEVELHELP
 
+
 # Change this to 0 show compiler invocation lines by default:
 QUIET ?= 1
 
+include $(ADAPTATION)/Makefile.include
 include $(RIOTBASE)/Makefile.include
+

@@ -8,21 +8,7 @@ ADAPTATION ?= $(CURDIR)/../../adaptation
 USEPKG += ndn-lite
 
 DIRS += $(ADAPTATION)
-DIRS += $(ADAPTATION)/gnrc-netface
-DIRS += $(ADAPTATION)/security
-DIRS += $(ADAPTATION)/util
-
 USEMODULE += ndn-adaptation
-USEMODULE += ndn-adaptation-gnrc-netface
-USEMODULE += ndn-adaptation-util
-USEMODULE += ndn-adaptation-security
-
-USEMODULE += gnrc_netdev_default
-USEMODULE += auto_init_gnrc_netif
-USEMODULE += shell
-USEMODULE += shell_commands
-USEMODULE += ps
-USEMODULE += xtimer
 
 
 # If no BOARD is found in the environment, use this default:
@@ -44,4 +30,6 @@ CFLAGS += -DDEVELHELP
 # Change this to 0 show compiler invocation lines by default:
 QUIET ?= 1
 
+include $(ADAPTATION)/Makefile.include
 include $(RIOTBASE)/Makefile.include
+
