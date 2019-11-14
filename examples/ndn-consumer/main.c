@@ -15,6 +15,7 @@
 #include "ndn-lite/encode/name.h"
 #include "ndn-lite/encode/data.h"
 #include "ndn-lite/encode/interest.h"
+#include "ndn-lite/security/ndn-lite-rng.h"
 #include <kernel_types.h>
 #include <thread.h>
 #include "xtimer.h"
@@ -75,7 +76,15 @@ if (face_ptr == NULL)
      printf("interest encoding success\n");
    }
 
-   ndn_forwarder_express_interest(encoder.output_value, encoder.offset, on_data, on_timeout, NULL);
+
+  puts("testing random number generator");
+  uint8_t buffer[20] = {0};
+  puts("before ndn_rng()");
+  for (int i = 0; i < sizeof(buffer); i++) printf("%d ", *(buffer + i));puts("\n");
+  ndn_rng(buffer, sizeof(buffer));
+  puts("after ndn_rng()");
+  for (int i = 0; i < sizeof(buffer); i++) printf("%d ", *(buffer + i));puts("\n");
+  ndn_forwarder_express_interest(encoder.output_value, encoder.offset, on_data, on_timeout, NULL);
 
   running = true;
   while(running) {
