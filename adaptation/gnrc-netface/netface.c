@@ -32,29 +32,6 @@ static msg_t msg_q[MAX_NET_QUEUE_SIZE];
 static gnrc_netreg_entry_t me_reg;
 static ndn_netface_t _netface_table[GNRC_NETIF_NUMOF];
 
-/* helper function */
-ndn_netface_t* _ndn_netface_find(uint16_t face_id)
-{
-  for (int i = 0; i < GNRC_NETIF_NUMOF; ++i)
-  {
-    if (_netface_table[i].intf.face_id == face_id)
-      return &_netface_table[i];
-  }
-  return NULL;
-}
-
-ndn_netface_t* _ndn_netface_inverse_find(kernel_pid_t pid)
-{
-  for (int i = 0; i < GNRC_NETIF_NUMOF; ++i)
-  {
-    if (_netface_table[i].pid == pid)
-      return &_netface_table[i];
-  }
-  return NULL;
-}
-
-
-
 static int _ndn_netface_send_packet(kernel_pid_t pid, gnrc_pktsnip_t* pkt)
 {
   /* allocate interface header */
@@ -75,17 +52,14 @@ static int _ndn_netface_send_packet(kernel_pid_t pid, gnrc_pktsnip_t* pkt)
   ((gnrc_netif_hdr_t *)pkt->data)->if_pid = pid;
 
   /* send to interface */
-
-  //int ret = gnrc_netapi_dispatch_send(GNRC_NETTYPE_NDN, GNRC_NETREG_DEMUX_CTX_ALL, pkt);
   if (gnrc_netapi_send(pid, pkt) < 1)
-  //if (ret < 1)
   {
     printf("ndn: failed to send packet (netface=%" PRIkernel_pid ")\n", pid);
     gnrc_pktbuf_release(pkt);
     return -1;
   }
 
-  printf("ndn: successfully sent packet (netface=%" PRIkernel_pid ")\n", pid);
+  printf("ndn: successfully sent one gnrc packet (netface=%" PRIkernel_pid ")\n", pid);
   return 0;
 }
 
@@ -109,14 +83,15 @@ static int _ndn_netface_send_fragments(kernel_pid_t pid, const uint8_t* data,
   ndn_fragmenter_t fragmenter;
   uint8_t fragmented[mtu];
 
-  // TODO: frag_identifier is hard code as 99 now, need to be random
-  ndn_fragmenter_init(&fragmenter, data, data_size, mtu, 99);
+  uint16_t identifier = 0;
+  ndn_rng((uint8_t*)&identifier, sizeof(identifier));
+  ndn_fragmenter_init(&fragmenter, data, data_size, mtu, &identifier);
 
   while(fragmenter.counter < fragmenter.total_frag_num)
   {
+    uint32_t size = (fragmenter.counter == fragmenter.total_frag_num - 1)? 
+                    (fragmenter.original_size - fragmenter.offset + 3) : mtu;
     ndn_fragmenter_fragment(&fragmenter, fragmented);
-    uint32_t size = (fragmenter.counter = fragmenter.total_frag_num - 1)?
-                     mtu : (fragmenter.original_size - fragmenter.offset);
     gnrc_pktsnip_t *pkt = gnrc_pktbuf_add(NULL, (void*)fragmented, size,
                                           GNRC_NETTYPE_NDN);
     if (pkt == NULL) {
@@ -130,18 +105,21 @@ static int _ndn_netface_send_fragments(kernel_pid_t pid, const uint8_t* data,
     printf("ndn: sent fragment (SEQ=%d, ID=%02X, "
            "size=%d, netface=%" PRIkernel_pid ")\n",
            (int)fragmenter.counter, fragmenter.frag_identifier, (int)size, pid);
-    // yield after sending a fragment
-    thread_yield();
+
   }
+
   return 0;
 }
 
 
 /* Network Face Interfaces */
 ndn_netface_t*
-ndn_netface_find(uint16_t face_id)
+ndn_netface_find(uint16_t index)
 {
-  return _ndn_netface_find(face_id);
+  if (index > GNRC_NETIF_NUMOF)
+   return NULL;
+
+  return &_netface_table[index];
 }
 
 int
@@ -168,12 +146,10 @@ ndn_netface_down(struct ndn_face_intf* self)
 int
 ndn_netface_send(struct ndn_face_intf* self, const uint8_t* packet, uint32_t size)
 {
-  ndn_netface_t* phyface = ndn_netface_find(self->face_id);
+  ndn_netface_t* phyface = (ndn_netface_t*)self;
   kernel_pid_t pid = phyface->pid;
   if (phyface == NULL)
-    printf("no such physical net face, face_id  = %d\n", self->face_id);
-
- printf("send...packet size is %d, current physical face mtu is %d\n", size, phyface->mtu);
+    printf("ndn: no such physical net face, face_id  = %d\n", self->face_id);
 
   /* check mtu */
   if (size > phyface->mtu)
@@ -197,27 +173,41 @@ ndn_netface_send(struct ndn_face_intf* self, const uint8_t* packet, uint32_t siz
 void 
 _process_packet(ndn_face_intf_t* self,  gnrc_pktsnip_t *pkt)
 {
-  printf("in\n");
 
   size_t len = pkt->size;
   uint8_t* buf = (uint8_t*)pkt->data;
 
   // not considering fragmentation first
   if  (pkt == NULL || pkt->type != GNRC_NETTYPE_NDN) {
-    printf("pkt is null or pkt type is not NDN\n");
+    printf("ndn: pkt is null or pkt type is not NDN\n");
     return -1;
   }
+  ndn_netface_t* face = (ndn_netface_t*)self;
 
-  ndn_forwarder_receive(self, buf, len);
-  printf("forwarder has processed this packet\n");
+  /* check if the packet starts with l2 fragmentation header */
+  if (buf[0] & NDN_FRAG_HB_MASK) {
+    uint16_t frag_id = (buf[1] << 8) + buf[2];
+    printf("ndn: l2 fragment received (MF=%x, SEQ=%u, ID=%02x, "
+            "packet size = %d, iface=%" PRIkernel_pid ")\n",
+            (buf[0] & NDN_FRAG_MF_MASK) >> 5,
+            buf[0] & NDN_FRAG_SEQ_MASK,
+            frag_id, len, face->pid);
+    int ret = ndn_frag_assembler_assemble_frag(&face->assembler, buf, len);
+    
+    // release the gnrc packet
+    gnrc_pktbuf_release(pkt);
 
-  // release the gnrc packet
-  gnrc_pktbuf_release(pkt);
+    if (face->assembler.is_finished) {
+      ndn_forwarder_receive(self, face->frag_buffer, face->assembler.offset);
+      ndn_frag_assembler_init(&face->assembler, face->frag_buffer, sizeof(face->frag_buffer));
+      return;
+    }     
+  }
+
+  else {
+    ndn_forwarder_receive(self, buf, len);
+  }
 }
-
-
-
-
 
 void
 ndn_netface_receive(ndn_face_intf_t* self, void* param, uint32_t param_size)
@@ -247,16 +237,13 @@ ndn_netface_receive(ndn_face_intf_t* self, void* param, uint32_t param_size)
     case GNRC_NETAPI_MSG_TYPE_GET:
     case GNRC_NETAPI_MSG_TYPE_SET:
         reply.content.value = -ENOTSUP;
-        printf("set or get\n");
         msg_reply(&msg, &reply);
         break;
     case GNRC_NETAPI_MSG_TYPE_SND:
-       printf("send\n");
     default:
         break;
   }
 
-  printf("switch clause end... posing another netface receive event to this face\n");
   ndn_msgqueue_post(self, ndn_netface_receive, param, param_size);
 }
 
@@ -322,6 +309,8 @@ ndn_netface_auto_construct(void)
 
      ndn_forwarder_register_face(&_netface_table[i].intf);
      ndn_face_up(&_netface_table[i].intf);
+     ndn_frag_assembler_init(&_netface_table[i].assembler, _netface_table[i].frag_buffer, 
+                              sizeof(_netface_table[i].frag_buffer));
      
      // post face receive event
      ndn_msgqueue_post(&_netface_table[i].intf, ndn_netface_receive, NULL, 0);

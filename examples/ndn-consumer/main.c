@@ -22,7 +22,7 @@
 #include "shell.h"
 
 static ndn_interest_t interest;
-static uint8_t buffer[100];
+static uint8_t buffer[250];
 bool running = false;
 
 void
@@ -34,8 +34,8 @@ on_data(const uint8_t* rawdata, uint32_t data_size, void* userdata)
     printf("Decoding failed.\n");
   }
 
-  data.content_value[data.content_size] = 0;
-  printf("It says: %s\n", data.content_value);
+  for (int i = 0; i < 100; i++)
+    printf("It says: %d\n", *(data.content_value + i));
   running = false;
 }
 
@@ -58,14 +58,14 @@ ndn_lite_startup();
 ndn_face_intf_t* face_ptr = &ndn_netface_find(0)->intf;
 if (face_ptr == NULL) 
  printf("null face ptr\n");
- ndn_forwarder_add_route_by_str(&ndn_netface_find(0)->intf, "/ndn", strlen("/ndn"));
+
+ndn_forwarder_add_route_by_str(&ndn_netface_find(0)->intf, "/ndn", strlen("/ndn"));
 
  ndn_name_from_string(&interest.name, "/ndn/test", strlen("/ndn/test"));
   ndn_name_print(&interest.name);
   ndn_interest_set_MustBeFresh(&interest, true);
   ndn_interest_set_CanBePrefix(&interest, true);
-  uint32_t nonce =  124;
-  interest.nonce = nonce;
+  ndn_rng(&interest.nonce, sizeof(interest.nonce));
   interest.lifetime = 5000;
    printf("expressing interest\n");
 
@@ -76,14 +76,6 @@ if (face_ptr == NULL)
      printf("interest encoding success\n");
    }
 
-
-  puts("testing random number generator");
-  uint8_t buffer[20] = {0};
-  puts("before ndn_rng()");
-  for (int i = 0; i < sizeof(buffer); i++) printf("%d ", *(buffer + i));puts("\n");
-  ndn_rng(buffer, sizeof(buffer));
-  puts("after ndn_rng()");
-  for (int i = 0; i < sizeof(buffer); i++) printf("%d ", *(buffer + i));puts("\n");
   ndn_forwarder_express_interest(encoder.output_value, encoder.offset, on_data, on_timeout, NULL);
 
   running = true;

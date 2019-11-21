@@ -12,6 +12,7 @@
 #define NDN_NETIF_H_
 
 #include "ndn-lite/forwarder/face.h"
+#include "ndn-lite/encode/fragmentation-support.h"
 #include <kernel_types.h>
 #include <thread.h>
 
@@ -25,7 +26,8 @@ extern "C" {
 typedef struct ndn_netface {
   ndn_face_intf_t intf; /** << base class of ndn-lite face */
   uint16_t mtu;        /**< mtu of the interface */
-  uint8_t frag_buffer[200]; /**< reassembly buffer */
+  uint8_t frag_buffer[500]; /**< reassembly buffer */
+  ndn_frag_assembler_t assembler;
   kernel_pid_t pid;
 } ndn_netface_t;
 
@@ -35,7 +37,7 @@ typedef struct ndn_netface {
  */
 uint32_t ndn_netface_auto_construct(void);
 
-ndn_netface_t* ndn_netface_find(uint16_t face_id);
+ndn_netface_t* ndn_netface_find(uint16_t index);
 
 void ndn_netface_traverse_print(void);
 

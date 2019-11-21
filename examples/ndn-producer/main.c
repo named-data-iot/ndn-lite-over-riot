@@ -26,21 +26,23 @@
 #include "net/gnrc/pktdump.h"
 
 
-static uint8_t buffer[200] = {0};
-
+static uint8_t buffer[250] = {0};
+static uint8_t content[150];
 static ndn_name_t name;
+static ndn_data_t data;
 bool running = false;
 
 void
 on_interest(const uint8_t *interest, uint32_t interest_size, void *userdata)
 {
-  ndn_data_t data;
   ndn_encoder_t encoder;
-  char * str = "I'm a Data packet.";
+  
+  for (int i = 0; i < sizeof(content); i++)
+    content[i] = i;
 
   printf("On interest\n");
   ndn_name_from_string(&data.name, "/ndn/test/01", strlen("/ndn/test/01"));
-  ndn_data_set_content(&data, (uint8_t*)str, strlen(str) + 1);
+  ndn_data_set_content(&data, content, sizeof(content));
   ndn_metainfo_init(&data.metainfo);
   ndn_metainfo_set_content_type(&data.metainfo, NDN_CONTENT_TYPE_BLOB);
   encoder_init(&encoder, buffer, sizeof(buffer));
