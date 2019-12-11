@@ -8,8 +8,8 @@
  * See AUTHORS.md for complete list of NDN IOT PKG authors and contributors.
  */
 
-#ifndef NDN_NETIF_H_
-#define NDN_NETIF_H_
+#ifndef NDN_NETFACE_H_
+#define NDN_NETFACE_H_
 
 #include "ndn-lite/forwarder/face.h"
 #include "ndn-lite/encode/fragmentation-support.h"
@@ -20,30 +20,47 @@
 extern "C" {
 #endif
 
-/**
- * Network face entry.
+/*
+ * Link layer face.
  */
 typedef struct ndn_netface {
-  ndn_face_intf_t intf; /** << base class of ndn-lite face */
-  uint16_t mtu;        /**< mtu of the interface */
-  uint8_t frag_buffer[500]; /**< reassembly buffer */
+  /*
+   * The inherited interface.
+   */
+  ndn_face_intf_t intf;
+  /*
+   * Link layer MTU.
+   */
+  uint16_t mtu;
+  /*
+   * Re-assembly buffer.
+   */
+  uint8_t frag_buffer[500];
+  /*
+   * Assembler help the re-assembly.
+   */
   ndn_frag_assembler_t assembler;
+  /*
+   * Corresponding link layer PID.
+   */
   kernel_pid_t pid;
 } ndn_netface_t;
 
-/**
+/*
  * Initializes the netif table and try to add existing
  * network devices into the netif and face tables.
+ * @return the initialized netfaces.
  */
 uint32_t ndn_netface_auto_construct(void);
 
-ndn_netface_t* ndn_netface_find(uint16_t index);
-
+/*
+ * Helper function to traverse the netface table, printing usable link layer faces.
+ */
 void ndn_netface_traverse_print(void);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* NDN_NETIF_H_ */
+#endif /* NDN_NETFACE_H_ */
  /** @} */
