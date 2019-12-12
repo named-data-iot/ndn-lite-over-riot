@@ -52,18 +52,14 @@ on_interest(const uint8_t *interest, uint32_t interest_size, void *userdata)
 
 int main(void)
 {
-
   printf("/**** Application Is Running: PID = %" PRIkernel_pid " ****/\n",
         thread_getpid());
 
- ndn_lite_startup();
-
- ndn_name_from_string(&name, "/ndn/test", strlen("/ndn/test"));
- ndn_name_print(&name);
-
-   ndn_forwarder_register_name_prefix(&name, on_interest, NULL);
+  ndn_lite_startup();
+  ndn_name_from_string(&name, "/ndn/test", strlen("/ndn/test"));
+  ndn_name_print(&name);
+  ndn_forwarder_register_name_prefix(&name, on_interest, NULL);
   running = true;
-
   while(running) {
     ndn_forwarder_process();
     xtimer_usleep(10);

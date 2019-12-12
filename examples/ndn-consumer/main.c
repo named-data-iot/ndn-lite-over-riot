@@ -49,35 +49,29 @@ on_timeout(void* userdata)
 
 int main(void)
 {
-
   printf("/**** Application Is Running: PID = %" PRIkernel_pid " ****/\n",
         thread_getpid());
 
-ndn_lite_startup();
+  ndn_lite_startup();
+  ndn_face_intf_t* face_ptr = &ndn_netface_find(0)->intf;
+  ndn_forwarder_add_route_by_str(&ndn_netface_find(0)->intf, "/ndn", strlen("/ndn"));
 
-ndn_face_intf_t* face_ptr = &ndn_netface_find(0)->intf;
-if (face_ptr == NULL) 
- printf("null face ptr\n");
-
-ndn_forwarder_add_route_by_str(&ndn_netface_find(0)->intf, "/ndn", strlen("/ndn"));
-
- ndn_name_from_string(&interest.name, "/ndn/test", strlen("/ndn/test"));
+  ndn_name_from_string(&interest.name, "/ndn/test", strlen("/ndn/test"));
   ndn_name_print(&interest.name);
   ndn_interest_set_MustBeFresh(&interest, true);
   ndn_interest_set_CanBePrefix(&interest, true);
   ndn_rng(&interest.nonce, sizeof(interest.nonce));
   interest.lifetime = 5000;
-   printf("expressing interest\n");
+  printf("expressing interest\n");
 
-   ndn_encoder_t encoder;
-   encoder_init(&encoder, buffer, sizeof(buffer));
-   int ret = ndn_interest_tlv_encode(&encoder, &interest);
-   if (ret == 0) {
-     printf("interest encoding success\n");
-   }
+  ndn_encoder_t encoder;
+  encoder_init(&encoder, buffer, sizeof(buffer));
+  int ret = ndn_interest_tlv_encode(&encoder, &interest);
+  if (ret == 0) {
+    printf("interest encoding success\n");
+  }
 
   ndn_forwarder_express_interest(encoder.output_value, encoder.offset, on_data, on_timeout, NULL);
-
   running = true;
   while(running) {
     ndn_forwarder_process();

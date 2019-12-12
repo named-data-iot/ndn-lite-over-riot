@@ -50,43 +50,35 @@ on_timeout(void* userdata)
 
 int main(void)
 {
-
   printf("/**** Application Is Running: PID = %" PRIkernel_pid " ****/\n",
         thread_getpid());
 
-ndn_lite_startup();
+  ndn_lite_startup();
+  ipv6_addr_t remote_addr;
+  if (ipv6_addr_from_str(&remote_addr, "ff02::1") == NULL) {
+    puts("Error: unable to parse destination address");
+    return;
+  }
 
-    ipv6_addr_t remote_addr;
-
-    if (ipv6_addr_from_str(&remote_addr, "ff02::1") == NULL) {
-        puts("Error: unable to parse destination address");
-        return;
-    }
-
-ndn_udp_face_t* face = ndn_udp_face_construct(6363, remote_addr, 6363);
-
-ndn_forwarder_add_route_by_str(&face->intf, "/ndn", strlen("/ndn"));
-
- ndn_name_from_string(&interest.name, "/ndn/test", strlen("/ndn/test"));
+  ndn_udp_face_t* face = ndn_udp_face_construct(6363, remote_addr, 6363);
+  ndn_forwarder_add_route_by_str(&face->intf, "/ndn", strlen("/ndn"));
+  ndn_name_from_string(&interest.name, "/ndn/test", strlen("/ndn/test"));
   ndn_name_print(&interest.name);
   ndn_interest_set_MustBeFresh(&interest, true);
   ndn_interest_set_CanBePrefix(&interest, true);
   ndn_rng(&interest.nonce, sizeof(interest.nonce));
   interest.lifetime = 5000;
-   printf("expressing interest\n");
+  printf("expressing interest\n");
 
-   ndn_encoder_t encoder;
-   encoder_init(&encoder, buffer, sizeof(buffer));
-   int ret = ndn_interest_tlv_encode(&encoder, &interest);
-   if (ret == 0) {
-     printf("interest encoding success\n");
-   }
+  ndn_encoder_t encoder;
+  encoder_init(&encoder, buffer, sizeof(buffer));
+  int ret = ndn_interest_tlv_encode(&encoder, &interest);
+  if (ret == 0) {
+    printf("interest encoding success\n");
+  }
 
   ndn_forwarder_express_interest(encoder.output_value, encoder.offset, on_data, on_timeout, NULL);
-
   running = true;
-    printf("before entering loop\n");
-
   while(running) {
     ndn_forwarder_process();
     xtimer_sleep(1);
