@@ -30,7 +30,22 @@ cd ndn-lite-over-riot/examples/ndn-consumer
 make all term PORT=tap1
 ```
 
-## Current Status and Plan
-* Fragementation not supported yet, will implement that.
+## Few technical details
 * Using slightly modified RIOT for larger stack size, for nRF52840DK, 4096 is the setting. Will test other boards lately.
-* The security backend adaptation.
+* UDP face is IPv6 only, and uses link-local multicast address as remote address.
+* Follow different fragmentation protocols than NDNLPv2. If one want to communicate with NFD, please avoid fragmentation.
+
+## Why NDN-Lite instead of...
+
+- NDN-RIOT
+
+  NDN-RIOT uses `malloc()`. However, the RIOT is one-way `malloc()` thus the  allocated buffer never be freed. After significant amount of time, application can never successfully apply for a buffer. One should can uses RIOT's dynamic memory allocation buffer to mitigate this issue, which at the cost of performance overhead. NDN-Lite however, no `malloc()`.
+
+  Also, NDN-RIOT doesn't follow latest NDN packet format and has strict assumption on packet size. NDN-Lite however, follow the latest packet format and can directly communicate with NFD.
+
+  NDN-RIOT operate over network layer and auto-configure all link-layer interfaces with NDN. It can't receive the NDN packet which is on a UDP overlay. NDN-Lite however, support both pure NDN and NDN-over-UDP fashion. For example, one can receive a pure NDN packet with IEEE 802.15.4 in one face, and push pack to the network with UDP face. 
+
+  NDN-Lite is a library which's enabled application-layer protocols, which may ease your development and research.
+
+
+
