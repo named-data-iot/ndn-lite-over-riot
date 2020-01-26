@@ -4,6 +4,7 @@ APPLICATION = ndn-consumer
 RIOTBASE ?= $(CURDIR)/../../../RIOT
 
 ADAPTATION ?= $(CURDIR)/../../adaptation
+NDN_DISABLE_UDP ?= 1
 
 USEPKG += ndn-lite
 

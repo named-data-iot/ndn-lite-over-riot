@@ -4,6 +4,7 @@ APPLICATION = ndn-producer
 RIOTBASE ?= $(CURDIR)/../../../../RIOT
 
 ADAPTATION ?= $(CURDIR)/../../../adaptation
+NDN_DISABLE_UDP ?= 0
 
 USEPKG += ndn-lite
 

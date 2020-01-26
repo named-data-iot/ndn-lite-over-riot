@@ -11,6 +11,9 @@
 #include "netface.h"
 
 #include "ndn-lite/encode/fragmentation-support.h"
+#define ENABLE_NDN_LOG_ERROR 1
+#define ENABLE_NDN_LOG_DEBUG 1
+#define ENABLE_NDN_LOG_INFO 1
 #include "ndn-lite/util/logger.h"
 #include "ndn-lite/forwarder/forwarder.h"
 #include "ndn-lite/ndn-constants.h"
@@ -54,6 +57,7 @@ ndn_l2_send_packet(kernel_pid_t pid, gnrc_pktsnip_t* pkt)
   }
 
   NDN_LOG_DEBUG("successfully sent one gnrc packet (netface=%" PRIkernel_pid ")\n", pid);
+  NDN_LOG_DEBUG("forwarder sending: %" PRIu32 " ms\n", ndn_time_now_ms());
   return 0;
 }
 
@@ -102,7 +106,7 @@ ndn_l2_send_fragments(kernel_pid_t pid, const uint8_t* data,
                   "size=%d, netface=%" PRIkernel_pid ")\n",
                   (int)fragmenter.counter, fragmenter.frag_identifier, (int)size, pid);
   }
-
+  NDN_LOG_DEBUG("forwarder sending: %" PRIu32 " ms\n", ndn_time_now_ms());
   return 0;
 }
 
@@ -115,7 +119,7 @@ ndn_l2_process_packet(ndn_face_intf_t* self, gnrc_pktsnip_t *pkt)
 
   /* assuming this is an NDN packet, not NDN-over-UDP */
   if (pkt == NULL || pkt->type != GNRC_NETTYPE_NDN) {
-    NDN_LOG_DEBUg("running on NDN-over-UDP overlay, discard\n");
+    NDN_LOG_DEBUG("running on NDN-over-UDP overlay, discard\n");
     return -1;
   }
 
@@ -132,6 +136,7 @@ ndn_l2_process_packet(ndn_face_intf_t* self, gnrc_pktsnip_t *pkt)
     /* release the gnrc packet */
     gnrc_pktbuf_release(pkt);
     if (face->assembler.is_finished) {
+      NDN_LOG_DEBUG("forwarder receiving: %" PRIu32 " ms\n", ndn_time_now_ms());
       ndn_forwarder_receive(self, face->frag_buffer, face->assembler.offset);
       ndn_frag_assembler_init(&face->assembler, face->frag_buffer, sizeof(face->frag_buffer));
       return;
@@ -139,6 +144,7 @@ ndn_l2_process_packet(ndn_face_intf_t* self, gnrc_pktsnip_t *pkt)
   }
 
   else {
+    NDN_LOG_DEBUG("forwarder receiving: %" PRIu32 " ms\n", ndn_time_now_ms());
     ndn_forwarder_receive(self, buf, len);
   }
 }

@@ -1,0 +1,163 @@
+2020-01-25 22:59:52,778 - INFO # DEBUG: ndn_data_tlv_encode_ecdsa_sign, L222: DATA-PKT-ECDSA-SIGN: 119191us
+2020-01-25 22:59:52,784 - INFO # DEBUG: ndn_data_tlv_encode_ecdsa_sign, L278: DATA-PKT-ENCODING: 6611us
+2020-01-25 22:59:52,910 - INFO # DEBUG: ndn_data_tlv_encode_ecdsa_sign, L222: DATA-PKT-ECDSA-SIGN: 119107us
+2020-01-25 22:59:52,917 - INFO # DEBUG: ndn_data_tlv_encode_ecdsa_sign, L278: DATA-PKT-ENCODING: 6613us
+2020-01-25 22:59:52,922 - INFO # INFO: simulate_bootstrap: bootstrap complete...
+2020-01-25 22:59:52,928 - INFO # DEBUG: main, L126: self_identity is /ndn-iot/0x14/CMD/living/motion_sensor9
+2020-01-25 22:59:53,935 - INFO # DEBUG: ps_publish_command, L700: PUB-COMMAND-DATA-AES-ENC: 275us
+2020-01-25 22:59:54,061 - INFO # DEBUG: ndn_data_tlv_encode_ecdsa_sign, L222: DATA-PKT-ECDSA-SIGN: 119429us
+2020-01-25 22:59:54,067 - INFO # DEBUG: ndn_data_tlv_encode_ecdsa_sign, L278: DATA-PKT-ENCODING: 6618us
+2020-01-25 22:59:54,073 - INFO # DEBUG: ps_publish_command, L711: PUB-CMD-PKT-SIZE: 230 Bytes
+2020-01-25 22:59:54,078 - INFO # INFO: ps_publish_command: [PUB/SUB] CMD Data has been generated
+2020-01-25 22:59:54,083 - INFO # /ndn-iot/0x14/CMD/living/motion_sensor9/p/t=lu
+2020-01-25 22:59:54,090 - INFO # DEBUG: ndn_l2_send_packet, L59: successfully sent one gnrc packet (netface=4)
+2020-01-25 22:59:54,095 - INFO # DEBUG: ndn_l2_send_packet, L60: forwarder sending: 1461 ms
+2020-01-25 22:59:54,103 - INFO # INFO: ps_publish_command: [PUB/SUB] Sent notification Interest for the newly generated cmd
+2020-01-25 22:59:54,108 - INFO # /ndn-iot/0x14/NOTIFY/CMD/living/motion_sensor9/p/t=lu
+2020-01-25 22:59:54,118 - INFO # DEBUG: ndn_netface_receive, L102: RCV message received from pid 4
+2020-01-25 22:59:54,124 - INFO # DEBUG: ndn_l2_process_packet, L147: forwarder receiving: 1489 ms
+2020-01-25 22:59:54,130 - INFO # INFO: _on_subscription_interest: [PUB/SUB] Received Subscription Interest
+2020-01-25 22:59:54,135 - INFO # /ndn-iot/0x14/CMD/living/motion_sensor9/p/t=lu
+2020-01-25 22:59:54,142 - INFO # DEBUG: ndn_l2_send_packet, L59: successfully sent one gnrc packet (netface=4)
+2020-01-25 22:59:54,147 - INFO # DEBUG: ndn_l2_send_packet, L60: forwarder sending: 1512 ms
+2020-01-25 22:59:54,155 - INFO # DEBUG: ndn_l2_send_fragments, L105: sent fragment (SEQ=1, ID=1F1E, size=102, netface=4)
+2020-01-25 22:59:54,162 - INFO # DEBUG: ndn_l2_send_packet, L59: successfully sent one gnrc packet (netface=4)
+2020-01-25 22:59:54,167 - INFO # DEBUG: ndn_l2_send_packet, L60: forwarder sending: 1532 ms
+2020-01-25 22:59:54,175 - INFO # DEBUG: ndn_l2_send_fragments, L105: sent fragment (SEQ=2, ID=1F1E, size=102, netface=4)
+2020-01-25 22:59:54,182 - INFO # DEBUG: ndn_l2_send_packet, L59: successfully sent one gnrc packet (netface=4)
+2020-01-25 22:59:54,187 - INFO # DEBUG: ndn_l2_send_packet, L60: forwarder sending: 1552 ms
+2020-01-25 22:59:54,194 - INFO # DEBUG: ndn_l2_send_fragments, L105: sent fragment (SEQ=3, ID=1F1E, size=35, netface=4)
+2020-01-25 22:59:54,200 - INFO # DEBUG: ndn_l2_send_fragments, L109: forwarder sending: 1565 ms
+2020-01-25 22:59:54,205 - INFO # INFO: _on_subscription_interest: [PUB/SUB] Replid cached Data
+
+
+2020-01-25 23:00:36,525 - INFO # DEBUG: ndn_data_tlv_encode_ecdsa_sign, L222: DATA-PKT-ECDSA-SIGN: 119220us
+2020-01-25 23:00:36,531 - INFO # DEBUG: ndn_data_tlv_encode_ecdsa_sign, L278: DATA-PKT-ENCODING: 6616us
+2020-01-25 23:00:36,657 - INFO # DEBUG: ndn_data_tlv_encode_ecdsa_sign, L222: DATA-PKT-ECDSA-SIGN: 119172us
+2020-01-25 23:00:36,663 - INFO # DEBUG: ndn_data_tlv_encode_ecdsa_sign, L278: DATA-PKT-ENCODING: 6618us
+2020-01-25 23:00:36,668 - INFO # INFO: simulate_bootstrap: bootstrap complete...
+2020-01-25 23:00:36,675 - INFO # DEBUG: main, L126: self_identity is /ndn-iot/0x14/CMD/living/motion_sensor9
+2020-01-25 23:00:37,679 - INFO # DEBUG: ps_publish_command, L700: PUB-COMMAND-DATA-AES-ENC: 275us
+2020-01-25 23:00:37,805 - INFO # DEBUG: ndn_data_tlv_encode_ecdsa_sign, L222: DATA-PKT-ECDSA-SIGN: 119437us
+2020-01-25 23:00:37,811 - INFO # DEBUG: ndn_data_tlv_encode_ecdsa_sign, L278: DATA-PKT-ENCODING: 6618us
+2020-01-25 23:00:37,817 - INFO # DEBUG: ps_publish_command, L711: PUB-CMD-PKT-SIZE: 231 Bytes
+2020-01-25 23:00:37,822 - INFO # INFO: ps_publish_command: [PUB/SUB] CMD Data has been generated
+2020-01-25 23:00:37,827 - INFO # /ndn-iot/0x14/CMD/living/motion_sensor9/p/t=lu
+2020-01-25 23:00:37,834 - INFO # DEBUG: ndn_l2_send_packet, L59: successfully sent one gnrc packet (netface=4)
+2020-01-25 23:00:37,839 - INFO # DEBUG: ndn_l2_send_packet, L60: forwarder sending: 1461 ms
+2020-01-25 23:00:37,847 - INFO # INFO: ps_publish_command: [PUB/SUB] Sent notification Interest for the newly generated cmd
+2020-01-25 23:00:37,852 - INFO # /ndn-iot/0x14/NOTIFY/CMD/living/motion_sensor9/p/t=lu
+2020-01-25 23:00:37,861 - INFO # DEBUG: ndn_netface_receive, L102: RCV message received from pid 4
+2020-01-25 23:00:37,867 - INFO # DEBUG: ndn_l2_process_packet, L147: forwarder receiving: 1489 ms
+2020-01-25 23:00:37,873 - INFO # INFO: _on_subscription_interest: [PUB/SUB] Received Subscription Interest
+2020-01-25 23:00:37,878 - INFO # /ndn-iot/0x14/CMD/living/motion_sensor9/p/t=lu
+2020-01-25 23:00:37,886 - INFO # DEBUG: ndn_l2_send_packet, L59: successfully sent one gnrc packet (netface=4)
+2020-01-25 23:00:37,890 - INFO # DEBUG: ndn_l2_send_packet, L60: forwarder sending: 1513 ms
+2020-01-25 23:00:37,898 - INFO # DEBUG: ndn_l2_send_fragments, L105: sent fragment (SEQ=1, ID=1F1E, size=102, netface=4)
+2020-01-25 23:00:37,906 - INFO # DEBUG: ndn_l2_send_packet, L59: successfully sent one gnrc packet (netface=4)
+2020-01-25 23:00:37,910 - INFO # DEBUG: ndn_l2_send_packet, L60: forwarder sending: 1533 ms
+2020-01-25 23:00:37,918 - INFO # DEBUG: ndn_l2_send_fragments, L105: sent fragment (SEQ=2, ID=1F1E, size=102, netface=4)
+2020-01-25 23:00:37,925 - INFO # DEBUG: ndn_l2_send_packet, L59: successfully sent one gnrc packet (netface=4)
+2020-01-25 23:00:37,930 - INFO # DEBUG: ndn_l2_send_packet, L60: forwarder sending: 1552 ms
+2020-01-25 23:00:37,937 - INFO # DEBUG: ndn_l2_send_fragments, L105: sent fragment (SEQ=3, ID=1F1E, size=36, netface=4)
+2020-01-25 23:00:37,943 - INFO # DEBUG: ndn_l2_send_fragments, L109: forwarder sending: 1565 ms
+2020-01-25 23:00:37,948 - INFO # INFO: _on_subscription_interest: [PUB/SUB] Replid cached Data
+
+
+2020-01-25 23:01:08,094 - INFO # DEBUG: ndn_data_tlv_encode_ecdsa_sign, L222: DATA-PKT-ECDSA-SIGN: 119204us
+2020-01-25 23:01:08,100 - INFO # DEBUG: ndn_data_tlv_encode_ecdsa_sign, L278: DATA-PKT-ENCODING: 6614us
+2020-01-25 23:01:08,227 - INFO # DEBUG: ndn_data_tlv_encode_ecdsa_sign, L222: DATA-PKT-ECDSA-SIGN: 119261us
+2020-01-25 23:01:08,233 - INFO # DEBUG: ndn_data_tlv_encode_ecdsa_sign, L278: DATA-PKT-ENCODING: 6615us
+2020-01-25 23:01:08,238 - INFO # INFO: simulate_bootstrap: bootstrap complete...
+2020-01-25 23:01:08,245 - INFO # DEBUG: main, L126: self_identity is /ndn-iot/0x14/CMD/living/motion_sensor9
+2020-01-25 23:01:09,251 - INFO # DEBUG: ps_publish_command, L700: PUB-COMMAND-DATA-AES-ENC: 275us
+2020-01-25 23:01:09,377 - INFO # DEBUG: ndn_data_tlv_encode_ecdsa_sign, L222: DATA-PKT-ECDSA-SIGN: 119184us
+2020-01-25 23:01:09,383 - INFO # DEBUG: ndn_data_tlv_encode_ecdsa_sign, L278: DATA-PKT-ENCODING: 6613us
+2020-01-25 23:01:09,388 - INFO # DEBUG: ps_publish_command, L711: PUB-CMD-PKT-SIZE: 230 Bytes
+2020-01-25 23:01:09,394 - INFO # INFO: ps_publish_command: [PUB/SUB] CMD Data has been generated
+2020-01-25 23:01:09,398 - INFO # /ndn-iot/0x14/CMD/living/motion_sensor9/p/t=lu
+2020-01-25 23:01:09,405 - INFO # DEBUG: ndn_l2_send_packet, L59: successfully sent one gnrc packet (netface=4)
+2020-01-25 23:01:09,410 - INFO # DEBUG: ndn_l2_send_packet, L60: forwarder sending: 1461 ms
+2020-01-25 23:01:09,418 - INFO # INFO: ps_publish_command: [PUB/SUB] Sent notification Interest for the newly generated cmd
+2020-01-25 23:01:09,423 - INFO # /ndn-iot/0x14/NOTIFY/CMD/living/motion_sensor9/p/t=lu
+2020-01-25 23:01:09,433 - INFO # DEBUG: ndn_netface_receive, L102: RCV message received from pid 4
+2020-01-25 23:01:09,438 - INFO # DEBUG: ndn_l2_process_packet, L147: forwarder receiving: 1489 ms
+2020-01-25 23:01:09,446 - INFO # INFO: _on_subscription_interest: [PUB/SUB] Received Subscription Interest
+2020-01-25 23:01:09,449 - INFO # /ndn-iot/0x14/CMD/living/motion_sensor9/p/t=lu
+2020-01-25 23:01:09,461 - INFO # DEBUG: ndn_l2_send_packet, L59: successfully sent one gnrc packet (netface=4)
+2020-01-25 23:01:09,463 - INFO # DEBUG: ndn_l2_send_packet, L60: forwarder sending: 1512 ms
+2020-01-25 23:01:09,469 - INFO # DEBUG: ndn_l2_send_fragments, L105: sent fragment (SEQ=1, ID=1F1E, size=102, netface=4)
+2020-01-25 23:01:09,478 - INFO # DEBUG: ndn_l2_send_packet, L59: successfully sent one gnrc packet (netface=4)
+2020-01-25 23:01:09,482 - INFO # DEBUG: ndn_l2_send_packet, L60: forwarder sending: 1532 ms
+2020-01-25 23:01:09,489 - INFO # DEBUG: ndn_l2_send_fragments, L105: sent fragment (SEQ=2, ID=1F1E, size=102, netface=4)
+2020-01-25 23:01:09,496 - INFO # DEBUG: ndn_l2_send_packet, L59: successfully sent one gnrc packet (netface=4)
+2020-01-25 23:01:09,502 - INFO # DEBUG: ndn_l2_send_packet, L60: forwarder sending: 1552 ms
+2020-01-25 23:01:09,509 - INFO # DEBUG: ndn_l2_send_fragments, L105: sent fragment (SEQ=3, ID=1F1E, size=35, netface=4)
+2020-01-25 23:01:09,515 - INFO # DEBUG: ndn_l2_send_fragments, L109: forwarder sending: 1565 ms
+2020-01-25 23:01:09,520 - INFO # INFO: _on_subscription_interest: [PUB/SUB] Replid cached Data
+
+
+2020-01-25 23:01:52,678 - INFO # DEBUG: ndn_data_tlv_encode_ecdsa_sign, L222: DATA-PKT-ECDSA-SIGN: 119249us
+2020-01-25 23:01:52,684 - INFO # DEBUG: ndn_data_tlv_encode_ecdsa_sign, L278: DATA-PKT-ENCODING: 6613us
+2020-01-25 23:01:52,811 - INFO # DEBUG: ndn_data_tlv_encode_ecdsa_sign, L222: DATA-PKT-ECDSA-SIGN: 119217us
+2020-01-25 23:01:52,817 - INFO # DEBUG: ndn_data_tlv_encode_ecdsa_sign, L278: DATA-PKT-ENCODING: 6615us
+2020-01-25 23:01:52,822 - INFO # INFO: simulate_bootstrap: bootstrap complete...
+2020-01-25 23:01:52,829 - INFO # DEBUG: main, L126: self_identity is /ndn-iot/0x14/CMD/living/motion_sensor9
+2020-01-25 23:01:53,835 - INFO # DEBUG: ps_publish_command, L700: PUB-COMMAND-DATA-AES-ENC: 275us
+2020-01-25 23:01:53,961 - INFO # DEBUG: ndn_data_tlv_encode_ecdsa_sign, L222: DATA-PKT-ECDSA-SIGN: 119307us
+2020-01-25 23:01:53,966 - INFO # DEBUG: ndn_data_tlv_encode_ecdsa_sign, L278: DATA-PKT-ENCODING: 6619us
+2020-01-25 23:01:53,972 - INFO # DEBUG: ps_publish_command, L711: PUB-CMD-PKT-SIZE: 231 Bytes
+2020-01-25 23:01:53,977 - INFO # INFO: ps_publish_command: [PUB/SUB] CMD Data has been generated
+2020-01-25 23:01:53,982 - INFO # /ndn-iot/0x14/CMD/living/motion_sensor9/p/t=lu
+2020-01-25 23:01:53,990 - INFO # DEBUG: ndn_l2_send_packet, L59: successfully sent one gnrc packet (netface=4)
+2020-01-25 23:01:53,994 - INFO # DEBUG: ndn_l2_send_packet, L60: forwarder sending: 1461 ms
+2020-01-25 23:01:54,002 - INFO # INFO: ps_publish_command: [PUB/SUB] Sent notification Interest for the newly generated cmd
+2020-01-25 23:01:54,007 - INFO # /ndn-iot/0x14/NOTIFY/CMD/living/motion_sensor9/p/t=lu
+2020-01-25 23:01:54,418 - INFO # DEBUG: ndn_netface_receive, L102: RCV message received from pid 4
+2020-01-25 23:01:54,423 - INFO # DEBUG: ndn_l2_process_packet, L147: forwarder receiving: 1889 ms
+2020-01-25 23:01:54,430 - INFO # INFO: _on_subscription_interest: [PUB/SUB] Received Subscription Interest
+2020-01-25 23:01:54,434 - INFO # /ndn-iot/0x14/CMD/living/motion_sensor9/p/t=lu
+2020-01-25 23:01:54,441 - INFO # DEBUG: ndn_l2_send_packet, L59: successfully sent one gnrc packet (netface=4)
+2020-01-25 23:01:54,447 - INFO # DEBUG: ndn_l2_send_packet, L60: forwarder sending: 1913 ms
+2020-01-25 23:01:54,454 - INFO # DEBUG: ndn_l2_send_fragments, L105: sent fragment (SEQ=1, ID=1F1E, size=102, netface=4)
+2020-01-25 23:01:54,461 - INFO # DEBUG: ndn_l2_send_packet, L59: successfully sent one gnrc packet (netface=4)
+2020-01-25 23:01:54,467 - INFO # DEBUG: ndn_l2_send_packet, L60: forwarder sending: 1933 ms
+2020-01-25 23:01:54,474 - INFO # DEBUG: ndn_l2_send_fragments, L105: sent fragment (SEQ=2, ID=1F1E, size=102, netface=4)
+2020-01-25 23:01:54,481 - INFO # DEBUG: ndn_l2_send_packet, L59: successfully sent one gnrc packet (netface=4)
+2020-01-25 23:01:54,486 - INFO # DEBUG: ndn_l2_send_packet, L60: forwarder sending: 1953 ms
+2020-01-25 23:01:54,494 - INFO # DEBUG: ndn_l2_send_fragments, L105: sent fragment (SEQ=3, ID=1F1E, size=36, netface=4)
+2020-01-25 23:01:54,500 - INFO # DEBUG: ndn_l2_send_fragments, L109: forwarder sending: 1966 ms
+2020-01-25 23:01:54,505 - INFO # INFO: _on_subscription_interest: [PUB/SUB] Replid cached Data
+
+
+2020-01-25 23:02:13,166 - INFO # DEBUG: ndn_data_tlv_encode_ecdsa_sign, L222: DATA-PKT-ECDSA-SIGN: 119198us
+2020-01-25 23:02:13,172 - INFO # DEBUG: ndn_data_tlv_encode_ecdsa_sign, L278: DATA-PKT-ENCODING: 6612us
+2020-01-25 23:02:13,299 - INFO # DEBUG: ndn_data_tlv_encode_ecdsa_sign, L222: DATA-PKT-ECDSA-SIGN: 119117us
+2020-01-25 23:02:13,306 - INFO # DEBUG: ndn_data_tlv_encode_ecdsa_sign, L278: DATA-PKT-ENCODING: 6612us
+2020-01-25 23:02:13,311 - INFO # INFO: simulate_bootstrap: bootstrap complete...
+2020-01-25 23:02:13,317 - INFO # DEBUG: main, L126: self_identity is /ndn-iot/0x14/CMD/living/motion_sensor9
+2020-01-25 23:02:14,323 - INFO # DEBUG: ps_publish_command, L700: PUB-COMMAND-DATA-AES-ENC: 275us
+2020-01-25 23:02:14,449 - INFO # DEBUG: ndn_data_tlv_encode_ecdsa_sign, L222: DATA-PKT-ECDSA-SIGN: 119299us
+2020-01-25 23:02:14,455 - INFO # DEBUG: ndn_data_tlv_encode_ecdsa_sign, L278: DATA-PKT-ENCODING: 6618us
+2020-01-25 23:02:14,461 - INFO # DEBUG: ps_publish_command, L711: PUB-CMD-PKT-SIZE: 230 Bytes
+2020-01-25 23:02:14,466 - INFO # INFO: ps_publish_command: [PUB/SUB] CMD Data has been generated
+2020-01-25 23:02:14,471 - INFO # /ndn-iot/0x14/CMD/living/motion_sensor9/p/t=lu
+2020-01-25 23:02:14,480 - INFO # DEBUG: ndn_l2_send_packet, L59: successfully sent one gnrc packet (netface=4)
+2020-01-25 23:02:14,483 - INFO # DEBUG: ndn_l2_send_packet, L60: forwarder sending: 1461 ms
+2020-01-25 23:02:14,491 - INFO # INFO: ps_publish_command: [PUB/SUB] Sent notification Interest for the newly generated cmd
+2020-01-25 23:02:14,496 - INFO # /ndn-iot/0x14/NOTIFY/CMD/living/motion_sensor9/p/t=lu
+2020-01-25 23:02:14,506 - INFO # DEBUG: ndn_netface_receive, L102: RCV message received from pid 4
+2020-01-25 23:02:14,511 - INFO # DEBUG: ndn_l2_process_packet, L147: forwarder receiving: 1489 ms
+2020-01-25 23:02:14,518 - INFO # INFO: _on_subscription_interest: [PUB/SUB] Received Subscription Interest
+2020-01-25 23:02:14,522 - INFO # /ndn-iot/0x14/CMD/living/motion_sensor9/p/t=lu
+2020-01-25 23:02:14,530 - INFO # DEBUG: ndn_l2_send_packet, L59: successfully sent one gnrc packet (netface=4)
+2020-01-25 23:02:14,535 - INFO # DEBUG: ndn_l2_send_packet, L60: forwarder sending: 1512 ms
+2020-01-25 23:02:14,542 - INFO # DEBUG: ndn_l2_send_fragments, L105: sent fragment (SEQ=1, ID=1F1E, size=102, netface=4)
+2020-01-25 23:02:14,550 - INFO # DEBUG: ndn_l2_send_packet, L59: successfully sent one gnrc packet (netface=4)
+2020-01-25 23:02:14,555 - INFO # DEBUG: ndn_l2_send_packet, L60: forwarder sending: 1532 ms
+2020-01-25 23:02:14,562 - INFO # DEBUG: ndn_l2_send_fragments, L105: sent fragment (SEQ=2, ID=1F1E, size=102, netface=4)
+2020-01-25 23:02:14,569 - INFO # DEBUG: ndn_l2_send_packet, L59: successfully sent one gnrc packet (netface=4)
+2020-01-25 23:02:14,575 - INFO # DEBUG: ndn_l2_send_packet, L60: forwarder sending: 1552 ms
+2020-01-25 23:02:14,582 - INFO # DEBUG: ndn_l2_send_fragments, L105: sent fragment (SEQ=3, ID=1F1E, size=35, netface=4)
+2020-01-25 23:02:14,588 - INFO # DEBUG: ndn_l2_send_fragments, L109: forwarder sending: 1565 ms
+2020-01-25 23:02:14,593 - INFO # INFO: _on_subscription_interest: [PUB/SUB] Replid cached Data

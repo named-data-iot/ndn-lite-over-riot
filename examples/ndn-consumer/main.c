@@ -53,8 +53,9 @@ int main(void)
         thread_getpid());
 
   ndn_lite_startup();
-  ndn_face_intf_t* face_ptr = &ndn_netface_find(0)->intf;
-  ndn_forwarder_add_route_by_str(&ndn_netface_find(0)->intf, "/ndn", strlen("/ndn"));
+  ndn_netface_t* netface = ndn_netface_get_list();
+  ndn_face_intf_t* face_ptr = &netface[0].intf;
+  ndn_forwarder_add_route_by_str(face_ptr, "/ndn", strlen("/ndn"));
 
   ndn_name_from_string(&interest.name, "/ndn/test", strlen("/ndn/test"));
   ndn_name_print(&interest.name);

@@ -1,10 +1,10 @@
 # name of your application
-APPLICATION = ndn-producer
+APPLICATION = controller
 # This has to be the absolute path to the RIOT base directory and NDN Lite adaptation :
-RIOTBASE ?= $(CURDIR)/../../../RIOT
+RIOTBASE ?= $(CURDIR)/../../../../RIOT
 
-ADAPTATION ?= $(CURDIR)/../../adaptation
-NDN_DISABLE_UDP ?= 1
+ADAPTATION ?= $(CURDIR)/../../../adaptation
+NDN_DISABLE_UDP ?= 0
 
 USEPKG += ndn-lite
 

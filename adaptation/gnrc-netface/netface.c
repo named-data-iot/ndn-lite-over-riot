@@ -13,6 +13,11 @@
 
 #include "ndn-lite/encode/fragmentation-support.h"
 #include "ndn-lite/forwarder/forwarder.h"
+
+#define ENABLE_NDN_LOG_ERROR 1
+#define ENABLE_NDN_LOG_DEBUG 1
+#define ENABLE_NDN_LOG_INFO 1
+
 #include "ndn-lite/util/logger.h"
 #include "ndn-lite/ndn-constants.h"
 
@@ -87,7 +92,6 @@ ndn_netface_receive(ndn_face_intf_t* self, void* param, uint32_t param_size)
   reply.type = GNRC_NETAPI_MSG_TYPE_ACK;
   int ret = msg_try_receive(&msg);
   if (ret == -1) {
-    NDN_LOG_DEBUG("no messgae receive yet, posting another netface receiving event\n");
     ndn_msgqueue_post(self, ndn_netface_receive, param, param_size);
     return;
   }
@@ -153,6 +157,18 @@ ndn_netface_auto_construct(void)
       continue;
     }
 
+    // set device net proto to NDN
+    if (gnrc_netapi_get(pid, NETOPT_PROTO, 0,
+                        &proto, sizeof(proto)) == sizeof(proto)) {
+        // this device supports PROTO option
+        NDN_LOG_DEBUG("set device net proto to NDN\n");
+        if (proto != GNRC_NETTYPE_NDN) {
+            proto = GNRC_NETTYPE_NDN;
+            gnrc_netapi_set(pid, NETOPT_PROTO, 0,
+                            &proto, sizeof(proto));
+        }
+    }
+
     /* setting up forwarder face*/
     _netface_table[i].intf.state = NDN_FACE_STATE_DOWN;
     _netface_table[i].intf.face_id = NDN_INVALID_ID;
@@ -185,5 +201,11 @@ void ndn_netface_traverse_print(void)
                    _netface_table[i].intf.face_id, _netface_table[i].mtu);
   }
   printf("-----------------------------------------\n");
+}
+
+ndn_netface_t*
+ndn_netface_get_list(void)
+{
+  return &_netface_table;
 }
  /** @} */

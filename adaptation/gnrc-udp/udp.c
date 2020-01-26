@@ -37,7 +37,7 @@ ndn_udp_face_recv(void *self, size_t param_len, void *param)
       NDN_LOG_DEBUG("RCV message received from pid %"
                      PRIkernel_pid "\n", msg.sender_pid);      
       /* catch the received packet */
-      (gnrc_pktsnip_t *)pkt = (gnrc_pktsnip_t *)msg.content.ptr;
+      gnrc_pktsnip_t* pkt = (gnrc_pktsnip_t *)msg.content.ptr;
       size_t len = pkt->size;
       uint8_t* buf = pkt->data;
       /* assume a NDN-over-UDP packet, if not, discard */

@@ -1,21 +1,28 @@
 
 DIRS += $(ADAPTATION)/gnrc-netface
-DIRS += $(ADAPTATION)/gnrc-udp
+
+ifneq ($(NDN_DISABLE_UDP), 1)
+  DIRS += $(ADAPTATION)/gnrc-udp
+endif
 DIRS += $(ADAPTATION)/security
 DIRS += $(ADAPTATION)/util
 
 USEMODULE += gnrc_netdev_default
 USEMODULE += auto_init_gnrc_netif
-USEMODULE += gnrc_ipv6
-USEMODULE += gnrc_udp
+USEMODULE += gnrc_pktdump
+ifneq ($(NDN_DISABLE_UDP), 1)
+  USEMODULE += gnrc_ipv6
+  USEMODULE += gnrc_udp
+endif
 
 USEMODULE += shell
 USEMODULE += shell_commands
 USEMODULE += ps
 USEMODULE += xtimer
 
-
 USEMODULE += ndn-adaptation-gnrc-netface
-USEMODULE += ndn-adaptation-gnrc-udp
+ifneq ($(NDN_DISABLE_UDP), 1)
+  USEMODULE += ndn-adaptation-gnrc-udp
+endif
 USEMODULE += ndn-adaptation-util
 USEMODULE += ndn-adaptation-security

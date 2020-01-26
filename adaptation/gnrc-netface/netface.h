@@ -58,6 +58,9 @@ uint32_t ndn_netface_auto_construct(void);
  */
 void ndn_netface_traverse_print(void);
 
+ndn_netface_t*
+ndn_netface_get_list(void);
+
 #ifdef __cplusplus
 }
 #endif

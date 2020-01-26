@@ -1,0 +1,118 @@
+   text	   data	    bss	    dec	    hex	filename
+  63680	    336	  72464	 136480	  21520	/home/yu/ndn-lite-over-riot/app/pubsub/sub/bin/nrf52840dk/ndn-sub.elf
+
+
+
+
+2020-01-25 18:21:55,293 - INFO # DEBUG: ndn_l2_send_packet, L59: successfully sent one gnrc packet (netface=7)
+2020-01-25 18:21:55,294 - INFO # INFO: _periodic_sub_content_fetching: [PUB/SUB] Sent subscription Interest
+2020-01-25 18:21:55,295 - INFO # /ndn-iot/0x14/DATA/living/motion_sensor9
+2020-01-25 18:21:55,296 - INFO # DEBUG: ndn_netface_receive, L102: RCV message received from pid 7
+2020-01-25 18:21:55,297 - INFO # DEBUG: ndn_l2_process_packet, L128: l2 fragment received (MF=0, SEQ=0, ID=1f16, packet size = 102, iface=7)
+2020-01-25 18:21:55,298 - INFO # DEBUG: ndn_netface_receive, L102: RCV message received from pid 7
+2020-01-25 18:21:55,299 - INFO # DEBUG: ndn_l2_process_packet, L128: l2 fragment received (MF=0, SEQ=1, ID=1f16, packet size = 102, iface=7)
+2020-01-25 18:21:55,300 - INFO # DEBUG: ndn_netface_receive, L102: RCV message received from pid 7
+2020-01-25 18:21:55,301 - INFO # DEBUG: ndn_l2_process_packet, L128: l2 fragment received (MF=1, SEQ=2, ID=1f16, packet size = 45, iface=7)
+2020-01-25 18:21:55,302 - INFO # INFO: _on_new_content: Received new published content/command
+2020-01-25 18:21:55,303 - INFO # DEBUG: _on_new_content, L280: NEW-DATA-ARRIVE-TP: 972531 us
+2020-01-25 18:21:55,303 - INFO # DEBUG: _on_new_content, L281: SUB-NEW-DATA-PKT-SIZE: 240 Bytes
+2020-01-25 18:21:55,305 - INFO # INFO: _on_new_content_verify_success: New published content successfully pass signature verification.
+2020-01-25 18:21:55,307 - INFO # /ndn-iot/0x14/DATA/living/motion_sensor9/content-id/t=lu
+2020-01-25 18:21:55,315 - INFO # DEBUG: _on_new_content_verify_success, L213: SUB-NEW-DATA-AES-DEC: 1381us
+2020-01-25 18:21:55,326 - INFO # DEBUG: _on_new_content_verify_success, L239: key locator is /ndn-iot/0x14/DATA/living/motion_sensor9/KEY/T10x110xca
+2020-01-25 18:21:55,333 - INFO # DEBUG: _on_new_content_verify_success, L244: SUB-NEW-DATA-SCHEMA-VERIFY: 11097us
+2020-01-25 18:21:55,341 - INFO # DEBUG: _on_new_content_verify_success, L251: NEW-DATA-FINSIH-VERIFICATION-TP: 1155 ms
+2020-01-25 18:21:55,345 - INFO # DEBUG: on_motion_publish, L45: motion Data received
+
+2020-01-25 23:21:05,806 - INFO # DEBUG: ndn_l2_send_packet, L59: successfully sent one gnrc packet (netface=4)
+2020-01-25 23:21:05,807 - INFO # DEBUG: ndn_l2_send_packet, L60: forwarder sending: 974 ms
+2020-01-25 23:21:05,808 - INFO # INFO: _periodic_sub_content_fetching: [PUB/SUB] Sent subscription Interest
+2020-01-25 23:21:05,808 - INFO # /ndn-iot/0x14/DATA/living/motion_sensor9
+2020-01-25 23:21:05,809 - INFO # DEBUG: ndn_netface_receive, L102: RCV message received from pid 4
+2020-01-25 23:21:05,810 - INFO # DEBUG: ndn_l2_process_packet, L129: l2 fragment received (MF=0, SEQ=0, ID=1f16, packet size = 102, iface=4)
+2020-01-25 23:21:05,811 - INFO # DEBUG: ndn_netface_receive, L102: RCV message received from pid 4
+2020-01-25 23:21:05,812 - INFO # DEBUG: ndn_l2_process_packet, L129: l2 fragment received (MF=0, SEQ=1, ID=1f16, packet size = 102, iface=4)
+2020-01-25 23:21:05,813 - INFO # DEBUG: ndn_netface_receive, L102: RCV message received from pid 4
+2020-01-25 23:21:05,814 - INFO # DEBUG: ndn_l2_process_packet, L129: l2 fragment received (MF=1, SEQ=2, ID=1f16, packet size = 46, iface=4)
+2020-01-25 23:21:05,815 - INFO # DEBUG: ndn_l2_process_packet, L139: forwarder receiving: 1049 ms
+2020-01-25 23:21:05,816 - INFO # INFO: _on_new_content: Received new published content/command
+2020-01-25 23:21:05,816 - INFO # DEBUG: _on_new_content, L283: NEW-DATA-ARRIVE-TP: 1060964 us
+2020-01-25 23:21:05,817 - INFO # DEBUG: _on_new_content, L284: SUB-NEW-DATA-PKT-SIZE: 241 Bytes
+2020-01-25 23:21:05,836 - INFO # INFO: _on_new_content_verify_success: New published content successfully pass signature verification.
+2020-01-25 23:21:05,842 - INFO # /ndn-iot/0x14/DATA/living/motion_sensor9/content-id/t=lu
+2020-01-25 23:21:05,850 - INFO # DEBUG: _on_new_content_verify_success, L213: SUB-NEW-DATA-AES-DEC: 1379us
+2020-01-25 23:21:05,861 - INFO # DEBUG: _on_new_content_verify_success, L242: key locator is /ndn-iot/0x14/DATA/living/motion_sensor9/KEY/T10x110xca
+2020-01-25 23:21:05,868 - INFO # DEBUG: _on_new_content_verify_success, L247: SUB-NEW-DATA-SCHEMA-VERIFY: 11096us
+2020-01-25 23:21:05,875 - INFO # DEBUG: _on_new_content_verify_success, L254: NEW-DATA-FINSIH-VERIFICATION-TP: 1245 ms
+2020-01-25 23:21:05,881 - INFO # DEBUG: on_motion_publish, L50: motion DATA received
+
+2020-01-25 23:22:54,967 - INFO # DEBUG: ndn_l2_send_packet, L59: successfully sent one gnrc packet (netface=4)
+2020-01-25 23:22:54,968 - INFO # DEBUG: ndn_l2_send_packet, L60: forwarder sending: 887 ms
+2020-01-25 23:22:54,969 - INFO # INFO: _periodic_sub_content_fetching: [PUB/SUB] Sent subscription Interest
+2020-01-25 23:22:54,970 - INFO # /ndn-iot/0x14/DATA/living/motion_sensor9
+2020-01-25 23:22:54,971 - INFO # DEBUG: ndn_netface_receive, L102: RCV message received from pid 4
+2020-01-25 23:22:54,972 - INFO # DEBUG: ndn_l2_process_packet, L129: l2 fragment received (MF=0, SEQ=0, ID=1f16, packet size = 102, iface=4)
+2020-01-25 23:22:54,973 - INFO # DEBUG: ndn_netface_receive, L102: RCV message received from pid 4
+2020-01-25 23:22:54,974 - INFO # DEBUG: ndn_l2_process_packet, L129: l2 fragment received (MF=0, SEQ=1, ID=1f16, packet size = 102, iface=4)
+2020-01-25 23:22:54,975 - INFO # DEBUG: ndn_netface_receive, L102: RCV message received from pid 4
+2020-01-25 23:22:54,976 - INFO # DEBUG: ndn_l2_process_packet, L129: l2 fragment received (MF=1, SEQ=2, ID=1f16, packet size = 46, iface=4)
+2020-01-25 23:22:54,977 - INFO # DEBUG: ndn_l2_process_packet, L139: forwarder receiving: 963 ms
+2020-01-25 23:22:54,977 - INFO # INFO: _on_new_content: Received new published content/command
+2020-01-25 23:22:54,978 - INFO # DEBUG: _on_new_content, L283: NEW-DATA-ARRIVE-TP: 974408 us
+2020-01-25 23:22:54,979 - INFO # DEBUG: _on_new_content, L284: SUB-NEW-DATA-PKT-SIZE: 241 Bytes
+2020-01-25 23:22:54,996 - INFO # INFO: _on_new_content_verify_success: New published content successfully pass signature verification.
+2020-01-25 23:22:55,002 - INFO # /ndn-iot/0x14/DATA/living/motion_sensor9/content-id/t=lu
+2020-01-25 23:22:55,010 - INFO # DEBUG: _on_new_content_verify_success, L213: SUB-NEW-DATA-AES-DEC: 1380us
+2020-01-25 23:22:55,021 - INFO # DEBUG: _on_new_content_verify_success, L242: key locator is /ndn-iot/0x14/DATA/living/motion_sensor9/KEY/T10x110xca
+2020-01-25 23:22:55,028 - INFO # DEBUG: _on_new_content_verify_success, L247: SUB-NEW-DATA-SCHEMA-VERIFY: 11096us
+2020-01-25 23:22:55,035 - INFO # DEBUG: _on_new_content_verify_success, L254: NEW-DATA-FINSIH-VERIFICATION-TP: 1159 ms
+2020-01-25 23:22:55,040 - INFO # DEBUG: on_motion_publish, L50: motion DATA received
+
+
+2020-01-25 23:23:19,948 - INFO # DEBUG: ndn_l2_send_packet, L59: successfully sent one gnrc packet (netface=4)
+2020-01-25 23:23:19,948 - INFO # DEBUG: ndn_l2_send_packet, L60: forwarder sending: 892 ms
+2020-01-25 23:23:19,950 - INFO # INFO: _periodic_sub_content_fetching: [PUB/SUB] Sent subscription Interest
+2020-01-25 23:23:19,950 - INFO # /ndn-iot/0x14/DATA/living/motion_sensor9
+2020-01-25 23:23:19,951 - INFO # DEBUG: ndn_netface_receive, L102: RCV message received from pid 4
+2020-01-25 23:23:19,952 - INFO # DEBUG: ndn_l2_process_packet, L129: l2 fragment received (MF=0, SEQ=0, ID=1f16, packet size = 102, iface=4)
+2020-01-25 23:23:19,953 - INFO # DEBUG: ndn_netface_receive, L102: RCV message received from pid 4
+2020-01-25 23:23:19,955 - INFO # DEBUG: ndn_l2_process_packet, L129: l2 fragment received (MF=0, SEQ=1, ID=1f16, packet size = 102, iface=4)
+2020-01-25 23:23:19,955 - INFO # DEBUG: ndn_netface_receive, L102: RCV message received from pid 4
+2020-01-25 23:23:19,956 - INFO # DEBUG: ndn_l2_process_packet, L129: l2 fragment received (MF=1, SEQ=2, ID=1f16, packet size = 46, iface=4)
+2020-01-25 23:23:19,957 - INFO # DEBUG: ndn_l2_process_packet, L139: forwarder receiving: 968 ms
+2020-01-25 23:23:19,958 - INFO # INFO: _on_new_content: Received new published content/command
+2020-01-25 23:23:19,959 - INFO # DEBUG: _on_new_content, L283: NEW-DATA-ARRIVE-TP: 979457 us
+2020-01-25 23:23:19,959 - INFO # DEBUG: _on_new_content, L284: SUB-NEW-DATA-PKT-SIZE: 241 Bytes
+2020-01-25 23:23:19,979 - INFO # INFO: _on_new_content_verify_success: New published content successfully pass signature verification.
+2020-01-25 23:23:19,984 - INFO # /ndn-iot/0x14/DATA/living/motion_sensor9/content-id/t=lu
+2020-01-25 23:23:19,992 - INFO # DEBUG: _on_new_content_verify_success, L213: SUB-NEW-DATA-AES-DEC: 1380us
+2020-01-25 23:23:20,004 - INFO # DEBUG: _on_new_content_verify_success, L242: key locator is /ndn-iot/0x14/DATA/living/motion_sensor9/KEY/T10x110xca
+2020-01-25 23:23:20,010 - INFO # DEBUG: _on_new_content_verify_success, L247: SUB-NEW-DATA-SCHEMA-VERIFY: 11097us
+2020-01-25 23:23:20,018 - INFO # DEBUG: _on_new_content_verify_success, L254: NEW-DATA-FINSIH-VERIFICATION-TP: 1164 ms
+2020-01-25 23:23:20,022 - INFO # DEBUG: on_motion_publish, L50: motion DATA received
+
+
+2020-01-25 23:23:48,056 - INFO # DEBUG: ndn_l2_send_packet, L59: successfully sent one gnrc packet (netface=4)
+2020-01-25 23:23:48,057 - INFO # DEBUG: ndn_l2_send_packet, L60: forwarder sending: 890 ms
+2020-01-25 23:23:48,058 - INFO # INFO: _periodic_sub_content_fetching: [PUB/SUB] Sent subscription Interest
+2020-01-25 23:23:48,059 - INFO # /ndn-iot/0x14/DATA/living/motion_sensor9
+2020-01-25 23:23:48,059 - INFO # DEBUG: ndn_netface_receive, L102: RCV message received from pid 4
+2020-01-25 23:23:48,060 - INFO # DEBUG: ndn_l2_process_packet, L129: l2 fragment received (MF=0, SEQ=0, ID=1f16, packet size = 102, iface=4)
+2020-01-25 23:23:48,061 - INFO # DEBUG: ndn_netface_receive, L102: RCV message received from pid 4
+2020-01-25 23:23:48,062 - INFO # DEBUG: ndn_l2_process_packet, L129: l2 fragment received (MF=0, SEQ=1, ID=1f16, packet size = 102, iface=4)
+2020-01-25 23:23:48,063 - INFO # DEBUG: ndn_netface_receive, L102: RCV message received from pid 4
+2020-01-25 23:23:48,064 - INFO # DEBUG: ndn_l2_process_packet, L129: l2 fragment received (MF=1, SEQ=2, ID=1f16, packet size = 46, iface=4)
+2020-01-25 23:23:48,064 - INFO # DEBUG: ndn_l2_process_packet, L139: forwarder receiving: 966 ms
+2020-01-25 23:23:48,065 - INFO # INFO: _on_new_content: Received new published content/command
+2020-01-25 23:23:48,065 - INFO # DEBUG: _on_new_content, L283: NEW-DATA-ARRIVE-TP: 977424 us
+2020-01-25 23:23:48,066 - INFO # DEBUG: _on_new_content, L284: SUB-NEW-DATA-PKT-SIZE: 241 Bytes
+2020-01-25 23:23:48,087 - INFO # INFO: _on_new_content_verify_success: New published content successfully pass signature verification.
+2020-01-25 23:23:48,093 - INFO # /ndn-iot/0x14/DATA/living/motion_sensor9/content-id/t=lu
+2020-01-25 23:23:48,101 - INFO # DEBUG: _on_new_content_verify_success, L213: SUB-NEW-DATA-AES-DEC: 1379us
+2020-01-25 23:23:48,112 - INFO # DEBUG: _on_new_content_verify_success, L242: key locator is /ndn-iot/0x14/DATA/living/motion_sensor9/KEY/T10x110xca
+2020-01-25 23:23:48,119 - INFO # DEBUG: _on_new_content_verify_success, L247: SUB-NEW-DATA-SCHEMA-VERIFY: 11097us
+2020-01-25 23:23:48,126 - INFO # DEBUG: _on_new_content_verify_success, L254: NEW-DATA-FINSIH-VERIFICATION-TP: 1162 ms
+2020-01-25 23:23:48,131 - INFO # DEBUG: on_motion_publish, L50: motion DATA received
+
+
+
