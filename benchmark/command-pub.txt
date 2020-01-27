@@ -1,3 +1,7 @@
+  text	   data	    bss	    dec	    hex	filename
+  54364	    304	  60344	 115012	  1c144	/home/yu/ndn-lite-over-riot/app/pubsub/pub/bin/nrf52840dk/ndn-pub.elf
+
+
 2020-01-25 22:59:52,778 - INFO # DEBUG: ndn_data_tlv_encode_ecdsa_sign, L222: DATA-PKT-ECDSA-SIGN: 119191us
 2020-01-25 22:59:52,784 - INFO # DEBUG: ndn_data_tlv_encode_ecdsa_sign, L278: DATA-PKT-ENCODING: 6611us
 2020-01-25 22:59:52,910 - INFO # DEBUG: ndn_data_tlv_encode_ecdsa_sign, L222: DATA-PKT-ECDSA-SIGN: 119107us
